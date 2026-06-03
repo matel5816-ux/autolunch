@@ -1,0 +1,43 @@
+# Web Framework
+Flask==2.3.3
+python-dotenv==1.0.0
+
+# Database
+SQLAlchemy==2.0.21
+# 可選：改用 FastAPI 時替換為以下
+# fastapi==0.103.1
+# uvicorn==0.23.2
+
+# LINE Bot SDK
+line-bot-sdk==3.4.0
+
+# Google Maps API
+googlemaps==4.10.0
+
+# 數據處理
+pandas==2.0.3
+numpy==1.24.3
+
+# 工具函數
+requests==2.31.0
+python-dateutil==2.8.2
+
+# 日誌與監控
+python-logging-loki==0.3.2  # 選用：Grafana Loki 整合
+
+# 測試
+pytest==7.4.0
+pytest-cov==4.1.0
+pytest-mock==3.11.1
+
+# 代碼品質
+black==23.9.1
+flake8==6.0.0
+mypy==1.4.1
+
+# 部署相關
+gunicorn==21.2.0  # 生產 WSGI 伺服器
+gevent==23.9.1    # 非同步支援
+
+# 地理計算
+geopy==2.3.0      # 距離計算庫（备用）

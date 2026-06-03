@@ -1,0 +1,85 @@
+# Python 相關
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虛擬環境
+venv/
+ENV/
+env/
+.venv/
+
+# IDE 相關
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# 環境設定
+.env
+.env.local
+.env.*.local
+
+# 資料庫
+*.db
+*.sqlite
+*.sqlite3
+data/restaurants.db
+data/restaurants_backup.db
+
+# 日誌檔案
+logs/
+*.log
+
+# 測試覆蓋率
+.coverage
+htmlcov/
+.pytest_cache/
+
+# 部署相關
+*.pem
+*.key
+*.pub
+
+# 備份與暫時檔案
+*.bak
+*.tmp
+*.backup
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# 其他
+.directory
+.vscode-settings.json

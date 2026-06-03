@@ -1,6 +1,10 @@
 """
 AutoLunch LINE 午餐抽籤機器人 - 主應用
 """
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from flask import Flask, request, abort
 from src.config import get_config
 from src.database.queries import init_db

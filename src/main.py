@@ -22,6 +22,21 @@ app.config.from_object(config)
 # 初始化資料庫
 init_db()
 
+# 初始化示範資料（Render 上自動運行）
+try:
+    import sys
+    from pathlib import Path
+    script_path = Path(__file__).parent.parent / 'scripts' / 'populate_sample_data.py'
+    if script_path.exists():
+        spec = __import__('importlib.util').util.spec_from_file_location('populate_sample_data', script_path)
+        module = __import__('importlib.util').util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        if hasattr(module, 'init_sample_data'):
+            module.init_sample_data()
+except Exception as e:
+    import logging
+    logging.warning(f"Could not initialize sample data: {e}")
+
 
 @app.before_request
 def before_request():

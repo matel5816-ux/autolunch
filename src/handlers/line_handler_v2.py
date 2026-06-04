@@ -493,39 +493,51 @@ class LineHandlerV2:
                 return
 
             # 過濾符合條件的餐廳
+            from src.models.restaurant import PriceRange
+
             filtered_restaurants = []
             max_distance = max(distances)
 
+            # 將字符串價格轉換為 Enum
+            price_enums = []
+            for p in prices:
+                try:
+                    price_enums.append(PriceRange(p))
+                except:
+                    pass
+
             for restaurant in all_restaurants:
                 # 檢查距離
-                if restaurant.distance and restaurant.distance > max_distance:
+                if not restaurant.distance or restaurant.distance > max_distance:
                     continue
 
                 # 檢查距離是否在選定範圍內
-                if restaurant.distance:
-                    distance_ok = any(restaurant.distance <= d for d in distances)
-                    if not distance_ok:
-                        continue
+                distance_ok = any(restaurant.distance <= d for d in distances)
+                if not distance_ok:
+                    continue
 
                 # 檢查價格
-                price_ok = restaurant.price_range in prices
-                if not price_ok:
+                if restaurant.price_range not in price_enums:
                     continue
 
                 # 檢查支付方式
-                if payments and payments != ['']:
-                    payment_ok = False
+                payment_ok = False
+                if not payments or payments == ['']:
+                    payment_ok = True
+                else:
                     payment_map = {
                         'cash': '現金',
                         'line_pay': 'LINE Pay',
                         'street_pay': '街口支付'
                     }
                     for payment in payments:
-                        if payment_map.get(payment) in restaurant.payment_methods:
+                        payment_name = payment_map.get(payment, '')
+                        if payment_name in [p.value for p in restaurant.payment_methods]:
                             payment_ok = True
                             break
-                    if not payment_ok and '現金' not in restaurant.payment_methods:
-                        continue
+
+                if not payment_ok:
+                    continue
 
                 filtered_restaurants.append(restaurant)
 

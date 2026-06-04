@@ -149,7 +149,7 @@ def get_all_restaurants() -> List[Restaurant]:
         )
 
         # 計算距離
-        distance = GeometryService.calculate_distance(
+        distance = GeometryService.haversine_distance(
             config.COMPANY_LATITUDE, config.COMPANY_LONGITUDE,
             restaurant.latitude, restaurant.longitude
         )

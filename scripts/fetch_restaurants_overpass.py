@@ -126,11 +126,17 @@ def parse_restaurants(elements: List[Dict]) -> List[Dict]:
         phone = tags.get('phone', '')
         website = tags.get('website', '')
 
-        # 簡單的價格推測邏輯
-        if any(x in name for x in ['高檔', '精選', '頂級', '特選']):
+        # 細致的價格推測邏輯
+        if any(x in name for x in ['高檔', '精選', '頂級', '特選', '頂']):
             price_range = 'premium'
-        elif any(x in name for x in ['便當', '自助', '快餐', '平價']):
-            price_range = 'budget'
+        elif any(x in name for x in ['便當', '便民', '平價', '$']):
+            price_range = 'economy'
+        elif any(x in name for x in ['自助', '快餐', '小', '家庭']):
+            price_range = 'cheap'
+        elif any(x in name for x in ['日式', '定食', '套餐']):
+            price_range = 'mid'
+        elif any(x in name for x in ['铁板', '鐵板', '烤肉', '韓式']):
+            price_range = 'mid_high'
         else:
             price_range = 'mid'
 

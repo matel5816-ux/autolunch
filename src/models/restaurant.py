@@ -8,9 +8,20 @@ from dataclasses import dataclass
 
 class PriceRange(Enum):
     """價格範圍"""
-    BUDGET = 'budget'  # 平價（≤150元）
-    MID = 'mid'  # 中價（150-300元）
-    PREMIUM = 'premium'  # 高價（>300元）
+    ECONOMY = 'economy'        # 經濟（50-100元）
+    CHEAP = 'cheap'           # 平價（100-150元）
+    MID = 'mid'               # 中等（150-250元）
+    MID_HIGH = 'mid_high'     # 中高（250-400元）
+    PREMIUM = 'premium'       # 高檔（400元以上）
+
+
+PRICE_RANGE_INFO = {
+    'economy': {'name': '經濟', 'min': 50, 'max': 100, 'emoji': '💵'},
+    'cheap': {'name': '平價', 'min': 100, 'max': 150, 'emoji': '💵💵'},
+    'mid': {'name': '中等', 'min': 150, 'max': 250, 'emoji': '💵💵💵'},
+    'mid_high': {'name': '中高', 'min': 250, 'max': 400, 'emoji': '💵💵💵💵'},
+    'premium': {'name': '高檔', 'min': 400, 'max': 9999, 'emoji': '💵💵💵💵💵'},
+}
 
 
 class PaymentMethod(Enum):

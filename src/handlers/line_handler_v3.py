@@ -274,11 +274,23 @@ class LineHandlerV3:
     @staticmethod
     def handle_step2_price(user_id: str, data: str):
         """處理價格選擇"""
-        params = dict(param.split('=') for param in data.split('&')[1:])
-        distances = params.get('distances', '').split(',')
-        distances = [int(d) for d in distances if d]
-        prices = params.get('prices', '').split(',')
-        LineHandlerV3.send_step3_payment_menu(user_id, distances, prices)
+        try:
+            params = dict(param.split('=') for param in data.split('&')[1:])
+            distances = params.get('distances', '').split(',')
+            distances = [int(d) for d in distances if d]
+            prices = params.get('prices', '').split(',')
+
+            if not distances:
+                line_bot_api.push_message(user_id, TextSendMessage(text="❌ 距離數據遺失，請重新選擇"))
+                LineHandlerV3.send_step1_distance_menu(user_id)
+                return
+
+            LineHandlerV3.send_step3_payment_menu(user_id, distances, prices)
+        except Exception as e:
+            import logging
+            logging.error(f"Step 2 error: {e}")
+            line_bot_api.push_message(user_id, TextSendMessage(text="❌ 發生錯誤，請重新開始"))
+            LineHandlerV3.send_step1_distance_menu(user_id)
 
     # ==================== Step 3: 支付選擇 ====================
 
@@ -379,15 +391,26 @@ class LineHandlerV3:
     @staticmethod
     def handle_step3_payment(user_id: str, data: str):
         """處理支付方式選擇，執行抽籤"""
-        params = dict(param.split('=') for param in data.split('&')[1:])
-        distances = params.get('distances', '').split(',')
-        distances = [int(d) for d in distances if d]
-        prices = params.get('prices', '').split(',')
-        payments = params.get('payments', '').split(',')
+        try:
+            params = dict(param.split('=') for param in data.split('&')[1:])
+            distances = params.get('distances', '').split(',')
+            distances = [int(d) for d in distances if d]
+            prices = params.get('prices', '').split(',')
+            payments = params.get('payments', '').split(',')
 
-        confirm_text = f"✨ 準備抽籤中...\n\n📍 距離: {', '.join(map(str, distances))}m\n💰 預算: {', '.join(prices)}\n💳 支付: {', '.join(payments)}"
-        line_bot_api.push_message(user_id, TextSendMessage(text=confirm_text))
-        LineHandlerV3.perform_lucky_draw(user_id, distances, prices, payments)
+            if not distances or not prices:
+                line_bot_api.push_message(user_id, TextSendMessage(text="❌ 選擇不完整，請重新開始"))
+                LineHandlerV3.send_step1_distance_menu(user_id)
+                return
+
+            confirm_text = f"✨ 準備抽籤中...\n\n📍 距離: {', '.join(map(str, distances))}m\n💰 預算: {', '.join(prices)}\n💳 支付: {', '.join(payments)}"
+            line_bot_api.push_message(user_id, TextSendMessage(text=confirm_text))
+            LineHandlerV3.perform_lucky_draw(user_id, distances, prices, payments)
+        except Exception as e:
+            import logging
+            logging.error(f"Step 3 error: {e}")
+            line_bot_api.push_message(user_id, TextSendMessage(text="❌ 發生錯誤，請重新開始"))
+            LineHandlerV3.send_step1_distance_menu(user_id)
 
     # ==================== 結果：抽籤與顯示 ====================
 
@@ -395,6 +418,14 @@ class LineHandlerV3:
     def perform_lucky_draw(user_id: str, distances: List[int], prices: List[str], payments: List[str]):
         """執行抽籤"""
         try:
+            # 驗證參數
+            if not distances or not prices:
+                line_bot_api.push_message(user_id, TextSendMessage(
+                    text="❌ 選擇不完整，請重新開始\n請點擊「再抽一次」或輸入「午餐」重新選擇"
+                ))
+                LineHandlerV3.send_step1_distance_menu(user_id)
+                return
+
             all_restaurants = get_all_restaurants()
 
             if not all_restaurants:

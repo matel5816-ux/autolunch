@@ -61,26 +61,65 @@ class LineHandlerV2:
     def send_step1_distance_menu(user_id: str):
         """發送第一步：距離選擇菜單"""
         flex_message = FlexSendMessage(
-            alt_text="Step 1: 選擇距離",
+            alt_text="Step 1/3: 選擇距離",
             contents={
                 "type": "bubble",
+                "size": "mega",
+                "header": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "🍜 AutoLunch",
+                            "weight": "bold",
+                            "size": "xxl",
+                            "color": "#ffffff"
+                        },
+                        {
+                            "type": "text",
+                            "text": "午餐抽籤機",
+                            "size": "lg",
+                            "color": "#ffffff",
+                            "margin": "sm"
+                        }
+                    ],
+                    "backgroundColor": "#1DB446",
+                    "paddingAll": "20px"
+                },
                 "body": {
                     "type": "box",
                     "layout": "vertical",
                     "spacing": "md",
                     "contents": [
                         {
-                            "type": "text",
-                            "text": "🍜 午餐抽籤 - Step 1",
-                            "weight": "bold",
-                            "size": "xl",
-                            "color": "#1DB446"
+                            "type": "box",
+                            "layout": "baseline",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "Step 1/3",
+                                    "size": "sm",
+                                    "color": "#999999",
+                                    "flex": 0
+                                },
+                                {
+                                    "type": "filler"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "距離範圍",
+                                    "size": "sm",
+                                    "color": "#999999",
+                                    "flex": 0
+                                }
+                            ]
                         },
                         {
                             "type": "text",
-                            "text": "選擇午餐距離（可多選）",
-                            "size": "sm",
-                            "color": "#999999",
+                            "text": "你想在多遠的地方吃午餐？",
+                            "weight": "bold",
+                            "size": "lg",
                             "margin": "md"
                         },
                         {
@@ -96,16 +135,8 @@ class LineHandlerV2:
                                         "label": "📍 300m (5-10分鐘)",
                                         "data": "step1_select&distances=300"
                                     },
-                                    "style": "primary"
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "📍 300m + 600m",
-                                        "data": "step1_select&distances=300,600"
-                                    },
-                                    "style": "primary"
+                                    "style": "primary",
+                                    "color": "#1DB446"
                                 },
                                 {
                                     "type": "button",
@@ -114,16 +145,8 @@ class LineHandlerV2:
                                         "label": "📍 600m (10-15分鐘)",
                                         "data": "step1_select&distances=600"
                                     },
-                                    "style": "primary"
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "📍 600m + 1km",
-                                        "data": "step1_select&distances=600,1000"
-                                    },
-                                    "style": "primary"
+                                    "style": "primary",
+                                    "color": "#1DB446"
                                 },
                                 {
                                     "type": "button",
@@ -132,16 +155,8 @@ class LineHandlerV2:
                                         "label": "📍 1km (15-20分鐘)",
                                         "data": "step1_select&distances=1000"
                                     },
-                                    "style": "primary"
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "📍 1km + 1.5km",
-                                        "data": "step1_select&distances=1000,1500"
-                                    },
-                                    "style": "primary"
+                                    "style": "primary",
+                                    "color": "#1DB446"
                                 },
                                 {
                                     "type": "button",
@@ -150,16 +165,18 @@ class LineHandlerV2:
                                         "label": "📍 1.5km (20-25分鐘)",
                                         "data": "step1_select&distances=1500"
                                     },
-                                    "style": "primary"
+                                    "style": "primary",
+                                    "color": "#1DB446"
                                 },
                                 {
                                     "type": "button",
                                     "action": {
                                         "type": "postback",
-                                        "label": "📍 全部距離",
+                                        "label": "📍 不限距離",
                                         "data": "step1_select&distances=300,600,1000,1500"
                                     },
-                                    "style": "primary"
+                                    "style": "primary",
+                                    "color": "#FF6B6B"
                                 }
                             ]
                         }
@@ -185,85 +202,59 @@ class LineHandlerV2:
         """發送第二步：價格選擇菜單"""
         distances_str = ','.join(map(str, distances))
 
-        price_buttons = [
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "💵 經濟 (50-100元)",
-                    "data": f"step2_select&distances={distances_str}&prices=economy"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "💵💵 平價 (100-150元)",
-                    "data": f"step2_select&distances={distances_str}&prices=cheap"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "💵💵💵 中等 (150-250元)",
-                    "data": f"step2_select&distances={distances_str}&prices=mid"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "💵💵💵💵 中高 (250-400元)",
-                    "data": f"step2_select&distances={distances_str}&prices=mid_high"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "💵💵💵💵💵 高檔 (400+元)",
-                    "data": f"step2_select&distances={distances_str}&prices=premium"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "✅ 全部價格",
-                    "data": f"step2_select&distances={distances_str}&prices=economy,cheap,mid,mid_high,premium"
-                },
-                "style": "primary",
-                "color": "#1DB446"
-            }
-        ]
-
         flex_message = FlexSendMessage(
-            alt_text="Step 2: 選擇價格",
+            alt_text="Step 2/3: 選擇價格",
             contents={
                 "type": "bubble",
+                "size": "mega",
+                "header": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "🍜 AutoLunch",
+                            "weight": "bold",
+                            "size": "xxl",
+                            "color": "#ffffff"
+                        }
+                    ],
+                    "backgroundColor": "#1DB446",
+                    "paddingAll": "20px"
+                },
                 "body": {
                     "type": "box",
                     "layout": "vertical",
                     "spacing": "md",
                     "contents": [
                         {
-                            "type": "text",
-                            "text": "🍜 午餐抽籤 - Step 2",
-                            "weight": "bold",
-                            "size": "xl",
-                            "color": "#1DB446"
+                            "type": "box",
+                            "layout": "baseline",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "Step 2/3",
+                                    "size": "sm",
+                                    "color": "#999999",
+                                    "flex": 0
+                                },
+                                {
+                                    "type": "filler"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "預算範圍",
+                                    "size": "sm",
+                                    "color": "#999999",
+                                    "flex": 0
+                                }
+                            ]
                         },
                         {
                             "type": "text",
-                            "text": "選擇午餐價格（可多選）",
-                            "size": "sm",
-                            "color": "#999999",
+                            "text": "你的預算是多少？",
+                            "weight": "bold",
+                            "size": "lg",
                             "margin": "md"
                         },
                         {
@@ -271,7 +262,68 @@ class LineHandlerV2:
                             "layout": "vertical",
                             "margin": "lg",
                             "spacing": "sm",
-                            "contents": price_buttons
+                            "contents": [
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "💵 經濟 (50-100元)",
+                                        "data": f"step2_select&distances={distances_str}&prices=economy"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "💵💵 平價 (100-150元)",
+                                        "data": f"step2_select&distances={distances_str}&prices=cheap"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "💵💵💵 中等 (150-250元)",
+                                        "data": f"step2_select&distances={distances_str}&prices=mid"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "💵💵💵💵 中高 (250-400元)",
+                                        "data": f"step2_select&distances={distances_str}&prices=mid_high"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "💵💵💵💵💵 高檔 (400+元)",
+                                        "data": f"step2_select&distances={distances_str}&prices=premium"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "✅ 不限預算",
+                                        "data": f"step2_select&distances={distances_str}&prices=economy,cheap,mid,mid_high,premium"
+                                    },
+                                    "style": "primary",
+                                    "color": "#FF6B6B"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -297,67 +349,59 @@ class LineHandlerV2:
         distances_str = ','.join(map(str, distances))
         prices_str = ','.join(prices)
 
-        payment_buttons = [
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "💰 現金",
-                    "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "📱 LINE Pay",
-                    "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=line_pay"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "📱 街口支付",
-                    "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=street_pay"
-                },
-                "style": "primary"
-            },
-            {
-                "type": "button",
-                "action": {
-                    "type": "postback",
-                    "label": "✅ 全部支付",
-                    "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash,line_pay,street_pay"
-                },
-                "style": "primary",
-                "color": "#1DB446"
-            }
-        ]
-
         flex_message = FlexSendMessage(
-            alt_text="Step 3: 選擇付款方式",
+            alt_text="Step 3/3: 選擇付款方式",
             contents={
                 "type": "bubble",
+                "size": "mega",
+                "header": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "🍜 AutoLunch",
+                            "weight": "bold",
+                            "size": "xxl",
+                            "color": "#ffffff"
+                        }
+                    ],
+                    "backgroundColor": "#1DB446",
+                    "paddingAll": "20px"
+                },
                 "body": {
                     "type": "box",
                     "layout": "vertical",
                     "spacing": "md",
                     "contents": [
                         {
-                            "type": "text",
-                            "text": "🍜 午餐抽籤 - Step 3",
-                            "weight": "bold",
-                            "size": "xl",
-                            "color": "#1DB446"
+                            "type": "box",
+                            "layout": "baseline",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "Step 3/3",
+                                    "size": "sm",
+                                    "color": "#999999",
+                                    "flex": 0
+                                },
+                                {
+                                    "type": "filler"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "付款方式",
+                                    "size": "sm",
+                                    "color": "#999999",
+                                    "flex": 0
+                                }
+                            ]
                         },
                         {
                             "type": "text",
-                            "text": "選擇付款方式（可多選）",
-                            "size": "sm",
-                            "color": "#999999",
+                            "text": "你想用什麼方式付款？",
+                            "weight": "bold",
+                            "size": "lg",
                             "margin": "md"
                         },
                         {
@@ -365,7 +409,48 @@ class LineHandlerV2:
                             "layout": "vertical",
                             "margin": "lg",
                             "spacing": "sm",
-                            "contents": payment_buttons
+                            "contents": [
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "💰 現金",
+                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "📱 LINE Pay",
+                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=line_pay"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "📱 街口支付",
+                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=street_pay"
+                                    },
+                                    "style": "primary",
+                                    "color": "#1DB446"
+                                },
+                                {
+                                    "type": "button",
+                                    "action": {
+                                        "type": "postback",
+                                        "label": "✅ 任何付款",
+                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash,line_pay,street_pay"
+                                    },
+                                    "style": "primary",
+                                    "color": "#FF6B6B"
+                                }
+                            ]
                         }
                     ]
                 }

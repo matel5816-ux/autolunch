@@ -116,6 +116,8 @@ def add_restaurant(
 
 def get_all_restaurants() -> List[Restaurant]:
     """取得所有餐廳"""
+    from src.services.geometry_service import GeometryService
+
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -145,6 +147,14 @@ def get_all_restaurants() -> List[Restaurant]:
             review_count=row['review_count'],
             is_active=bool(row['is_active']),
         )
+
+        # 計算距離
+        distance = GeometryService.calculate_distance(
+            config.COMPANY_LATITUDE, config.COMPANY_LONGITUDE,
+            restaurant.latitude, restaurant.longitude
+        )
+        restaurant.distance = distance
+
         restaurants.append(restaurant)
 
     return restaurants

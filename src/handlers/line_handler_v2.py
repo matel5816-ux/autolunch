@@ -555,11 +555,7 @@ class LineHandlerV2:
                 return
 
             # 生成 Google Maps URL
-            maps_url = NavigationService.generate_google_maps_url(
-                selected.name,
-                selected.latitude,
-                selected.longitude
-            )
+            maps_url = NavigationService.generate_restaurant_maps_link(selected)
 
             # 發送結果卡片
             result_card = {

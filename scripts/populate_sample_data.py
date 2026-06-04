@@ -1,7 +1,11 @@
 """
 示範資料初始化腳本
 """
+import sys
+import os
 import json
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from src.database.queries import init_db, add_restaurant
 from src.models.restaurant import PaymentMethod
 

@@ -35,7 +35,7 @@ class Config:
 
     # Distance Options
     DISTANCE_OPTIONS = [
-        int(d) for d in os.getenv('DISTANCE_OPTIONS', '300,600,1000,1500').split(',')
+        int(d) for d in os.getenv('DISTANCE_OPTIONS', '300,500,800,1000').split(',')
     ]
     DEFAULT_DISTANCE = int(os.getenv('DEFAULT_DISTANCE', '1000'))
 

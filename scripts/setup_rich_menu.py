@@ -47,7 +47,7 @@ def setup_rich_menu():
                 },
                 "action": {
                     "type": "postback",
-                    "data": "step1_select&distances=600"
+                    "data": "step1_select&distances=500"
                 }
             },
             {
@@ -59,7 +59,7 @@ def setup_rich_menu():
                 },
                 "action": {
                     "type": "postback",
-                    "data": "step1_select&distances=1500"
+                    "data": "step1_select&distances=800"
                 }
             }
         ]

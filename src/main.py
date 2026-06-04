@@ -8,8 +8,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from flask import Flask, request, abort
 from src.config import get_config
 from src.database.queries import init_db, get_all_restaurants
-from src.handlers.line_handler_v2 import (
-    line_bot_api, webhook_handler, LineHandlerV2 as LineHandler
+from src.handlers.line_handler_v3 import (
+    line_bot_api, webhook_handler, LineHandlerV3 as LineHandler
 )
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent

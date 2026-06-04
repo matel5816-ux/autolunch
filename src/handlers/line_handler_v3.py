@@ -39,8 +39,14 @@ class LineHandlerV3:
         user_id = event.source.user_id
         trigger_words = ['午餐', '抽籤', 'lunch', 'draw']
 
-        if any(text.lower() in word.lower() or word.lower() in text.lower()
-               for word in trigger_words):
+        # 檢查是否包含觸發關鍵字（中文、英文皆可）
+        should_trigger = False
+        for word in trigger_words:
+            if word in text:  # 完全字符匹配
+                should_trigger = True
+                break
+
+        if should_trigger:
             LineHandlerV3.send_step1_distance_menu(user_id)
         else:
             reply_text = "👋 歡迎使用 AutoLunch 午餐探險家！\n\n輸入「午餐」或「抽籤」開始吧！"

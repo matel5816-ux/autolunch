@@ -2,6 +2,7 @@
 資料庫查詢函數
 """
 import sqlite3
+import os
 from typing import List, Optional
 from src.models.restaurant import Restaurant, PriceRange, PaymentMethod
 from src.config import get_config
@@ -12,6 +13,13 @@ config = get_config()
 def get_db_connection():
     """獲取資料庫連接"""
     db_path = config.DATABASE_URL.replace('sqlite:///', '').replace('sqlite:///:memory:', ':memory:')
+
+    # 確保資料庫目錄存在
+    if db_path != ':memory:':
+        db_dir = os.path.dirname(db_path)
+        if db_dir and not os.path.exists(db_dir):
+            os.makedirs(db_dir, exist_ok=True)
+
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn

@@ -558,6 +558,34 @@ class LineHandlerV2:
             maps_url = NavigationService.generate_restaurant_maps_link(selected)
 
             # 發送結果卡片
+            detail_contents = [
+                {
+                    "type": "text",
+                    "text": f"📍 距離: {selected.distance:.0f}m",
+                    "size": "sm"
+                },
+                {
+                    "type": "text",
+                    "text": f"💵 價格: {PRICE_RANGE_INFO.get(selected.price_range, {}).get('name', selected.price_range)}",
+                    "size": "sm"
+                }
+            ]
+
+            if selected.rating > 0:
+                detail_contents.append({
+                    "type": "text",
+                    "text": f"⭐ 評分: {selected.rating}",
+                    "size": "sm"
+                })
+
+            if selected.phone:
+                detail_contents.append({
+                    "type": "text",
+                    "text": f"📞 {selected.phone}",
+                    "size": "xs",
+                    "color": "#999999"
+                })
+
             result_card = {
                 "type": "bubble",
                 "body": {
@@ -591,29 +619,7 @@ class LineHandlerV2:
                             "layout": "vertical",
                             "margin": "md",
                             "spacing": "sm",
-                            "contents": [
-                                {
-                                    "type": "text",
-                                    "text": f"📍 距離: {selected.distance:.0f}m",
-                                    "size": "sm"
-                                },
-                                {
-                                    "type": "text",
-                                    "text": f"💵 價格: {PRICE_RANGE_INFO.get(selected.price_range, {}).get('name', selected.price_range)}",
-                                    "size": "sm"
-                                },
-                                {
-                                    "type": "text",
-                                    "text": f"⭐ 評分: {selected.rating}",
-                                    "size": "sm"
-                                } if selected.rating > 0 else None,
-                                {
-                                    "type": "text",
-                                    "text": f"📞 {selected.phone}",
-                                    "size": "xs",
-                                    "color": "#999999"
-                                } if selected.phone else None,
-                            ]
+                            "contents": detail_contents
                         },
                         {
                             "type": "box",
@@ -645,9 +651,6 @@ class LineHandlerV2:
                     ]
                 }
             }
-
-            # 過濾 None 值
-            result_card['body']['contents'] = [item for item in result_card['body']['contents'] if item is not None]
 
             flex_message = FlexSendMessage(alt_text=f"抽籤結果: {selected.name}", contents=result_card)
             line_bot_api.push_message(user_id, flex_message)

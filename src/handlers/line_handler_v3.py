@@ -421,14 +421,18 @@ class LineHandlerV3:
                 if not payments or payments == ['']:
                     payment_ok = True
                 else:
+                    # 支付方式映射（從前端代碼到 PaymentMethod 值）
                     payment_map = {
-                        'cash': '現金',
-                        'line_pay': 'LINE Pay',
-                        'street_pay': '街口支付'
+                        'cash': PaymentMethod.CASH.value,
+                        'line_pay': PaymentMethod.LINE_PAY.value,
+                        'street_pay': PaymentMethod.STREET_CASH.value
                     }
-                    for payment in payments:
-                        payment_name = payment_map.get(payment, '')
-                        if payment_name in [p.value for p in restaurant.payment_methods]:
+                    required_payment_values = [payment_map.get(p, '') for p in payments if p]
+                    restaurant_payment_values = [p.value for p in restaurant.payment_methods]
+
+                    # 檢查餐廳是否支持選定的支付方式之一
+                    for required_value in required_payment_values:
+                        if required_value in restaurant_payment_values:
                             payment_ok = True
                             break
 
@@ -460,7 +464,7 @@ class LineHandlerV3:
                 },
                 {
                     "type": "text",
-                    "text": f"💰 {PRICE_RANGE_INFO.get(selected.price_range, {}).get('name', selected.price_range)}",
+                    "text": f"💰 {PRICE_RANGE_INFO.get(selected.price_range.value, {}).get('name', selected.price_range.value)}",
                     "size": "sm",
                     "color": COLORS['gray']
                 }

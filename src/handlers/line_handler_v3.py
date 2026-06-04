@@ -52,7 +52,9 @@ class LineHandlerV3:
         data = event.postback.data
         user_id = event.source.user_id
 
-        if data.startswith('step1_'):
+        if data == 'step1_restart':
+            LineHandlerV3.send_step1_distance_menu(user_id)
+        elif data.startswith('step1_'):
             LineHandlerV3.handle_step1_distance(user_id, data)
         elif data.startswith('step2_'):
             LineHandlerV3.handle_step2_price(user_id, data)

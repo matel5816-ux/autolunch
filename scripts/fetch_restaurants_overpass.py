@@ -140,10 +140,17 @@ def parse_restaurants(elements: List[Dict]) -> List[Dict]:
         else:
             price_range = 'mid'
 
-        # 支付方式（假設都支援現金）
+        # 支付方式假設：大多數餐廳都支援現金
         payment_methods = [PaymentMethod.CASH.value]
-        if 'visa' in tags.get('payment:visa', '').lower() or website:
+
+        # 如果有網站或接受信用卡，可能支援 LINE Pay
+        if website or 'visa' in tags.get('payment:visa', '').lower():
             payment_methods.append(PaymentMethod.LINE_PAY.value)
+
+        # 根據餐廳類型推測是否支援街口支付（高端餐廳更可能）
+        if price_range in ['mid_high', 'premium']:
+            if PaymentMethod.STREET_CASH.value not in payment_methods:
+                payment_methods.append(PaymentMethod.STREET_CASH.value)
 
         restaurant = {
             'name': name,

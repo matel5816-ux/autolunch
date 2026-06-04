@@ -81,97 +81,73 @@ class LineHandlerV3:
             alt_text="Step 1/3: 選擇距離",
             contents={
                 "type": "bubble",
-                "size": "mega",
                 "header": {
                     "type": "box",
                     "layout": "vertical",
-                    "backgroundColor": COLORS['primary'],
-                    "paddingAll": "24px",
+                    "backgroundColor": "#FF7A59",
+                    "paddingAll": "20px",
                     "contents": [
                         {
                             "type": "text",
                             "text": "🍜 午餐探險家",
                             "weight": "bold",
-                            "size": "xxl",
+                            "size": "xl",
                             "color": "#ffffff"
-                        },
-                        {
-                            "type": "text",
-                            "text": "AI 為你推薦美食",
-                            "size": "sm",
-                            "color": "rgba(255,255,255,0.8)",
-                            "margin": "sm"
                         }
                     ]
                 },
                 "body": {
                     "type": "box",
                     "layout": "vertical",
-                    "spacing": "lg",
-                    "paddingAll": "24px",
-                    "backgroundColor": COLORS['light_bg'],
+                    "spacing": "md",
+                    "paddingAll": "20px",
                     "contents": [
                         {
                             "type": "text",
-                            "text": "Step 1 - 你想走多遠？",
+                            "text": "你想走多遠？",
                             "weight": "bold",
-                            "size": "xl",
-                            "color": COLORS['dark']
+                            "size": "lg",
+                            "color": "#333333"
                         },
                         {
-                            "type": "text",
-                            "text": "美食家的步行距離",
-                            "size": "sm",
-                            "color": COLORS['gray'],
-                            "margin": "sm"
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "🍽️ 300m (5分鐘)",
+                                "data": "step1_select&distances=300"
+                            },
+                            "style": "primary",
+                            "color": "#FF7A59"
                         },
                         {
-                            "type": "box",
-                            "layout": "vertical",
-                            "spacing": "md",
-                            "margin": "lg",
-                            "contents": [
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "🍽️ 300m (5分鐘) 上班最近",
-                                        "data": "step1_select&distances=300"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['primary']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "🍲 500m (8分鐘) 輕鬆步行",
-                                        "data": "step1_select&distances=500"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['primary_light']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "🥢 800m (12分鐘) 探險時間",
-                                        "data": "step1_select&distances=800"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['accent']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "🍱 1km (15分鐘) 極限探險",
-                                        "data": "step1_select&distances=1000"
-                                    },
-                                    "style": "primary",
-                                    "color": "#FFC857"
-                                }
-                            ]
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "🍲 500m (8分鐘)",
+                                "data": "step1_select&distances=500"
+                            },
+                            "style": "primary",
+                            "color": "#FF9A5F"
+                        },
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "🥢 800m (12分鐘)",
+                                "data": "step1_select&distances=800"
+                            },
+                            "style": "primary",
+                            "color": "#FFB84D"
+                        },
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "🍱 1km (15分鐘)",
+                                "data": "step1_select&distances=1000"
+                            },
+                            "style": "primary",
+                            "color": "#FFC857"
                         }
                     ]
                 }
@@ -198,16 +174,15 @@ class LineHandlerV3:
             alt_text="Step 2/3: 選擇預算",
             contents={
                 "type": "bubble",
-                "size": "mega",
                 "header": {
                     "type": "box",
                     "layout": "vertical",
-                    "backgroundColor": COLORS['primary'],
-                    "paddingAll": "24px",
+                    "backgroundColor": "#FF7A59",
+                    "paddingAll": "20px",
                     "contents": [
                         {
                             "type": "text",
-                            "text": "💰 選擇你的預算",
+                            "text": "💰 選擇預算",
                             "weight": "bold",
                             "size": "xl",
                             "color": "#ffffff"
@@ -217,64 +192,48 @@ class LineHandlerV3:
                 "body": {
                     "type": "box",
                     "layout": "vertical",
-                    "spacing": "lg",
-                    "paddingAll": "24px",
-                    "backgroundColor": COLORS['light_bg'],
+                    "spacing": "md",
+                    "paddingAll": "20px",
                     "contents": [
                         {
-                            "type": "text",
-                            "text": "Step 2 - 今天預算？",
-                            "weight": "bold",
-                            "size": "xl",
-                            "color": COLORS['dark']
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "💵 經濟美食 (50-100元)",
+                                "data": f"step2_select&distances={distances_str}&prices=economy"
+                            },
+                            "style": "primary",
+                            "color": "#FF7A59"
                         },
                         {
-                            "type": "box",
-                            "layout": "vertical",
-                            "spacing": "md",
-                            "margin": "lg",
-                            "contents": [
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "💵 經濟美食 (50-100元)",
-                                        "data": f"step2_select&distances={distances_str}&prices=economy"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['primary']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "💳 中等品嚐 (150-250元)",
-                                        "data": f"step2_select&distances={distances_str}&prices=cheap,mid"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['accent']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "👑 高檔享受 (400+元)",
-                                        "data": f"step2_select&distances={distances_str}&prices=mid_high,premium"
-                                    },
-                                    "style": "primary",
-                                    "color": "#FFB84D"
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "✨ 不限預算",
-                                        "data": f"step2_select&distances={distances_str}&prices=economy,cheap,mid,mid_high,premium"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['success']
-                                }
-                            ]
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "💳 中等品嚐 (150-250元)",
+                                "data": f"step2_select&distances={distances_str}&prices=cheap,mid"
+                            },
+                            "style": "primary",
+                            "color": "#FF9A5F"
+                        },
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "👑 高檔享受 (400+元)",
+                                "data": f"step2_select&distances={distances_str}&prices=mid_high,premium"
+                            },
+                            "style": "primary",
+                            "color": "#FFB84D"
+                        },
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "✨ 不限預算",
+                                "data": f"step2_select&distances={distances_str}&prices=economy,cheap,mid,mid_high,premium"
+                            },
+                            "style": "primary",
+                            "color": "#6FCF97"
                         }
                     ]
                 }
@@ -315,12 +274,11 @@ class LineHandlerV3:
             alt_text="Step 3/3: 選擇支付方式",
             contents={
                 "type": "bubble",
-                "size": "mega",
                 "header": {
                     "type": "box",
                     "layout": "vertical",
-                    "backgroundColor": COLORS['primary'],
-                    "paddingAll": "24px",
+                    "backgroundColor": "#FF7A59",
+                    "paddingAll": "20px",
                     "contents": [
                         {
                             "type": "text",
@@ -334,64 +292,48 @@ class LineHandlerV3:
                 "body": {
                     "type": "box",
                     "layout": "vertical",
-                    "spacing": "lg",
-                    "paddingAll": "24px",
-                    "backgroundColor": COLORS['light_bg'],
+                    "spacing": "md",
+                    "paddingAll": "20px",
                     "contents": [
                         {
-                            "type": "text",
-                            "text": "Step 3 - 支付方式",
-                            "weight": "bold",
-                            "size": "xl",
-                            "color": COLORS['dark']
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "💰 現金",
+                                "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash"
+                            },
+                            "style": "primary",
+                            "color": "#FF7A59"
                         },
                         {
-                            "type": "box",
-                            "layout": "vertical",
-                            "spacing": "md",
-                            "margin": "lg",
-                            "contents": [
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "💰 現金",
-                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['primary']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "📱 LINE Pay",
-                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=line_pay"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['accent']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "📱 街口支付",
-                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=street_pay"
-                                    },
-                                    "style": "primary",
-                                    "color": "#FFB84D"
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "✨ 任何支付",
-                                        "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash,line_pay,street_pay"
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['success']
-                                }
-                            ]
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "📱 LINE Pay",
+                                "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=line_pay"
+                            },
+                            "style": "primary",
+                            "color": "#FF9A5F"
+                        },
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "📱 街口支付",
+                                "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=street_pay"
+                            },
+                            "style": "primary",
+                            "color": "#FFB84D"
+                        },
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "✨ 任何支付",
+                                "data": f"step3_select&distances={distances_str}&prices={prices_str}&payments=cash,line_pay,street_pay"
+                            },
+                            "style": "primary",
+                            "color": "#6FCF97"
                         }
                     ]
                 }
@@ -524,18 +466,17 @@ class LineHandlerV3:
 
             result_card = {
                 "type": "bubble",
-                "size": "mega",
                 "header": {
                     "type": "box",
                     "layout": "vertical",
-                    "backgroundColor": COLORS['primary'],
-                    "paddingAll": "24px",
+                    "backgroundColor": "#FF7A59",
+                    "paddingAll": "20px",
                     "contents": [
                         {
                             "type": "text",
                             "text": "🎉 恭喜！",
                             "weight": "bold",
-                            "size": "xxl",
+                            "size": "xl",
                             "color": "#ffffff"
                         }
                     ]
@@ -544,56 +485,34 @@ class LineHandlerV3:
                     "type": "box",
                     "layout": "vertical",
                     "spacing": "md",
-                    "paddingAll": "24px",
-                    "backgroundColor": COLORS['light_bg'],
+                    "paddingAll": "20px",
                     "contents": [
-                        {
-                            "type": "text",
-                            "text": "你的午餐是...",
-                            "size": "sm",
-                            "color": COLORS['gray']
-                        },
                         {
                             "type": "text",
                             "text": selected.name,
                             "weight": "bold",
-                            "size": "xxl",
-                            "margin": "md",
-                            "color": COLORS['primary']
+                            "size": "lg",
+                            "color": "#FF7A59"
+                        }
+                    ] + detail_contents + [
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "uri",
+                                "label": "📍 Google Maps",
+                                "uri": maps_url
+                            },
+                            "style": "primary",
+                            "color": "#6FCF97"
                         },
                         {
-                            "type": "box",
-                            "layout": "vertical",
-                            "margin": "lg",
-                            "spacing": "sm",
-                            "contents": detail_contents
-                        },
-                        {
-                            "type": "box",
-                            "layout": "horizontal",
-                            "margin": "lg",
-                            "spacing": "md",
-                            "contents": [
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "uri",
-                                        "label": "📍 Google Maps",
-                                        "uri": maps_url
-                                    },
-                                    "style": "primary",
-                                    "color": COLORS['success']
-                                },
-                                {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "postback",
-                                        "label": "🎲 再抽一次",
-                                        "data": "step1_restart"
-                                    },
-                                    "style": "secondary"
-                                }
-                            ]
+                            "type": "button",
+                            "action": {
+                                "type": "postback",
+                                "label": "🎲 再抽一次",
+                                "data": "step1_restart"
+                            },
+                            "style": "secondary"
                         }
                     ]
                 }

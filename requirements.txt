@@ -1,6 +1,7 @@
 # Web Framework
 Flask==2.3.3
 python-dotenv==1.0.0
+Werkzeug==2.3.7
 
 # LINE Bot SDK
 line-bot-sdk==3.4.0
@@ -10,6 +11,8 @@ googlemaps==4.10.0
 
 # 工具函數
 requests==2.31.0
+urllib3==2.0.4
 
 # 部署相關
 gunicorn==21.2.0
+aiohttp==3.8.5

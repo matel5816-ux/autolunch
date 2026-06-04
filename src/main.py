@@ -22,20 +22,27 @@ app.config.from_object(config)
 # 初始化資料庫
 init_db()
 
-# 初始化示範資料（Render 上自動運行）
+# 檢查並初始化資料（Render 上自動運行）
 try:
-    import sys
-    from pathlib import Path
-    script_path = Path(__file__).parent.parent / 'scripts' / 'populate_sample_data.py'
-    if script_path.exists():
-        spec = __import__('importlib.util').util.spec_from_file_location('populate_sample_data', script_path)
-        module = __import__('importlib.util').util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        if hasattr(module, 'init_sample_data'):
-            module.init_sample_data()
+    restaurants_count = len(get_all_restaurants())
+    if restaurants_count == 0:
+        # 如果資料庫是空的，自動初始化
+        import subprocess
+        import sys
+        from pathlib import Path
+
+        script_path = Path(__file__).parent.parent / 'scripts' / 'fetch_restaurants_overpass.py'
+        if script_path.exists():
+            # 使用 Overpass API 抓取餐廳
+            subprocess.run([sys.executable, str(script_path)], timeout=300)
+        else:
+            # 備選：使用示範資料
+            script_path = Path(__file__).parent.parent / 'scripts' / 'populate_sample_data.py'
+            if script_path.exists():
+                subprocess.run([sys.executable, str(script_path)])
 except Exception as e:
     import logging
-    logging.warning(f"Could not initialize sample data: {e}")
+    logging.warning(f"Could not initialize data: {e}")
 
 
 @app.before_request

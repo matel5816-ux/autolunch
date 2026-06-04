@@ -60,6 +60,42 @@ def health_check():
     }, 200
 
 
+@app.route('/debug', methods=['GET'])
+def debug_info():
+    """診斷端點 - 檢查配置和數據"""
+    import os
+
+    try:
+        restaurants = get_all_restaurants()
+
+        return {
+            'status': 'ok',
+            'environment': {
+                'PYTHONIOENCODING': os.getenv('PYTHONIOENCODING'),
+                'FLASK_ENV': os.getenv('FLASK_ENV'),
+                'DATABASE_URL': os.getenv('DATABASE_URL', 'Not set'),
+            },
+            'database': {
+                'total_restaurants': len(restaurants),
+                'sample_restaurant': {
+                    'name': restaurants[0].name if restaurants else None,
+                    'distance': restaurants[0].distance if restaurants else None,
+                    'price_range': str(restaurants[0].price_range) if restaurants else None,
+                } if restaurants else None,
+            },
+            'config': {
+                'company_name': config.COMPANY_NAME,
+                'company_location': f"{config.COMPANY_LATITUDE}, {config.COMPANY_LONGITUDE}",
+                'distance_options': config.DISTANCE_OPTIONS,
+            }
+        }, 200
+    except Exception as e:
+        return {
+            'status': 'error',
+            'message': str(e),
+        }, 500
+
+
 @app.route('/webhook/line', methods=['POST'])
 def webhook():
     """

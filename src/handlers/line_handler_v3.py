@@ -47,7 +47,12 @@ class LineHandlerV3:
                 break
 
         if should_trigger:
-            LineHandlerV3.send_step1_distance_menu(user_id)
+            try:
+                LineHandlerV3.send_step1_distance_menu(user_id)
+            except Exception as e:
+                import logging
+                logging.error(f"菜單發送失敗: {e}")
+                line_bot_api.push_message(user_id, TextSendMessage(text=f"❌ 發送菜單失敗: {str(e)}"))
         else:
             reply_text = "👋 歡迎使用 AutoLunch 午餐探險家！\n\n輸入「午餐」或「抽籤」開始吧！"
             line_bot_api.push_message(user_id, TextSendMessage(text=reply_text))

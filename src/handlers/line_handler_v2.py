@@ -548,7 +548,7 @@ class LineHandlerV2:
                 return
 
             # 隨機抽籤
-            selected = DrawService.draw_lucky(filtered_restaurants)
+            selected = DrawService.lucky_draw(filtered_restaurants)
 
             if not selected:
                 line_bot_api.push_message(user_id, TextSendMessage(text="❌ 抽籤失敗"))
